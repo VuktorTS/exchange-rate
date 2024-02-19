@@ -10,19 +10,19 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
-import rootReducer from './reducers';
+import { currencyReducer } from '../reduxState/currency/currencySlice';
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  whitelist: ['baseCusrrency'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, currencyReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: { currency: persistedReducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

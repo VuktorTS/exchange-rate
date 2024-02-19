@@ -14,7 +14,7 @@ export const currencySlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchBaseCurrency.fullfilled, (state, { peyload }) => {
+    builder.addCase(fetchBaseCurrency.fulfilled, (state, { peyload }) => {
       state.baseCurrency = peyload;
     });
   },

@@ -5,7 +5,7 @@ import { Header } from './components';
 import { ROUTES } from './helpers';
 import { lazy } from 'react';
 import { getUserInfo } from './service';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 // import { getUserInfo } from './service';
 
 const Home = lazy(() => import('pages/Home'));

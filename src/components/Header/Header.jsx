@@ -9,7 +9,6 @@ import { selectBaseCurrency } from 'reduxState/currency/selectors';
 
 export const Header = () => {
   const baseCurrency = useSelector(selectBaseCurrency);
-  console.log('baseCurrency: ', baseCurrency);
   return (
     <>
       <header className={styles.header}>

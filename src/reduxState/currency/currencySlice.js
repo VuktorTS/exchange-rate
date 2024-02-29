@@ -41,6 +41,7 @@ export const currencySlice = createSlice({
         state => {
           state.isLoading = false;
           state.isError = true;
+          state.exchangeInfo = null;
         },
       );
   },

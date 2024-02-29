@@ -3,14 +3,19 @@ import {
   ExchangeForm,
   ExchangeInfo,
   Heading,
+  Loader,
   Section,
 } from 'components';
 import { useSelector } from 'react-redux';
-import { selectExchangeInfo } from 'reduxState/currency/selectors';
+import {
+  selectExchangeInfo,
+  selectIsLoading,
+} from 'reduxState/currency/selectors';
 
 const Home = () => {
   const isError = false;
   const exchangeInfo = useSelector(selectExchangeInfo);
+  const isLoading = useSelector(selectIsLoading);
 
   return (
     <Section>
@@ -32,6 +37,7 @@ const Home = () => {
             title="Something went wrong...😐 Check the data validity and try again!"
           />
         )}
+        {isLoading && <Loader />}
       </Container>
     </Section>
   );

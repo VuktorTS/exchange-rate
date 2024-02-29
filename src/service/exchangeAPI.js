@@ -6,11 +6,13 @@ const instance = axios.create({
 });
 
 export const exchangeCurrency = async credentials => {
+  console.log('credentials: ', credentials);
   const {
     data: { query, info, result },
   } = await instance.get(`/convert`, {
     params: credentials,
   });
+  console.log('result: ', result);
   return { ...query, rate: info.rate, result };
 };
 

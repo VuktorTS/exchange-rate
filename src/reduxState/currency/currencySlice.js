@@ -1,11 +1,16 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { fetchBaseCurrency, fetchExchangeCurrency } from './operation';
+import {
+  fetchBaseCurrency,
+  fetchExchangeCurrency,
+  fetchLatestRates,
+} from './operation';
 
 const initialState = {
   baseCurrency: '',
   exchangeInfo: null,
   isLoading: false,
   isError: null,
+  rates: [],
 };
 
 export const currencySlice = createSlice({
@@ -29,15 +34,31 @@ export const currencySlice = createSlice({
         state.isLoading = false;
         state.isError = null;
       })
+      .addCase(fetchLatestRates.fulfilled, (state, { payload }) => {
+        state.rates = payload;
+        state.isLoading = false;
+        state.isError = null;
+      })
+
+      // -----------------------------------------------------------------------------------------------------
+
       .addMatcher(
-        isAnyOf(fetchBaseCurrency.pending, fetchExchangeCurrency.pending),
+        isAnyOf(
+          fetchBaseCurrency.pending,
+          fetchExchangeCurrency.pending,
+          fetchLatestRates.rejected,
+        ),
         state => {
           state.isLoading = true;
           state.isError = null;
         },
       )
       .addMatcher(
-        isAnyOf(fetchBaseCurrency.rejected, fetchExchangeCurrency.rejected),
+        isAnyOf(
+          fetchBaseCurrency.rejected,
+          fetchExchangeCurrency.rejected,
+          fetchLatestRates.rejected,
+        ),
         state => {
           state.isLoading = false;
           state.isError = true;

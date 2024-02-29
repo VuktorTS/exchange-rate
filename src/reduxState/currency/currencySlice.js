@@ -1,9 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { fetchBaseCurrency, fetchExchangeCurrency } from './operation';
 
 const initialState = {
   baseCurrency: '',
   exchangeInfo: null,
+  isLoading: false,
+  isError: null,
 };
 
 export const currencySlice = createSlice({
@@ -19,10 +21,28 @@ export const currencySlice = createSlice({
     builder
       .addCase(fetchBaseCurrency.fulfilled, (state, { payload }) => {
         state.baseCurrency = payload;
+        state.isLoading = false;
+        state.isError = null;
       })
       .addCase(fetchExchangeCurrency.fulfilled, (state, { payload }) => {
         state.exchangeInfo = payload;
-      });
+        state.isLoading = false;
+        state.isError = null;
+      })
+      .addMatcher(
+        isAnyOf(fetchBaseCurrency.pending, fetchExchangeCurrency.pending),
+        state => {
+          state.isLoading = true;
+          state.isError = null;
+        },
+      )
+      .addMatcher(
+        isAnyOf(fetchBaseCurrency.rejected, fetchExchangeCurrency.rejected),
+        state => {
+          state.isLoading = false;
+          state.isError = true;
+        },
+      );
   },
 });
 

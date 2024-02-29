@@ -9,13 +9,14 @@ import {
 import { useSelector } from 'react-redux';
 import {
   selectExchangeInfo,
+  selectIsError,
   selectIsLoading,
 } from 'reduxState/currency/selectors';
 
 const Home = () => {
-  const isError = false;
   const exchangeInfo = useSelector(selectExchangeInfo);
   const isLoading = useSelector(selectIsLoading);
+  const isError = useSelector(selectIsError);
 
   return (
     <Section>
